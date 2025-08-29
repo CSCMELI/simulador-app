@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pedido } from '../App';
+import type { Pedido } from '../App';
 
 interface EmbarqueProps {
   pedidos: Pedido[];
@@ -25,7 +25,6 @@ interface EmbarqueEnProceso {
 
 const Embarque: React.FC<EmbarqueProps> = ({ pedidos, onPedidoActualizado }) => {
   const [embarquesEnProceso, setEmbarquesEnProceso] = useState<EmbarqueEnProceso[]>([]);
-  const [mostrarFormularioEmbalaje, setMostrarFormularioEmbalaje] = useState<string | null>(null);
 
   const tiposEmbalaje = [
     { id: 'caja', nombre: '📦 Caja', descripcion: 'Para productos frágiles o voluminosos' },

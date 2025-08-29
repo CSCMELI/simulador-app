@@ -24,7 +24,6 @@ interface SurtidoEnProceso {
 
 const Surtido: React.FC<SurtidoProps> = ({ pedidos, onPedidoActualizado }) => {
   const [surtidosEnProceso, setSurtidosEnProceso] = useState<SurtidoEnProceso[]>([]);
-  const [pedidoSeleccionado, setPedidoSeleccionado] = useState<Pedido | null>(null);
 
   const herramientas = [
     { id: 'montacargas', nombre: '🚛 Montacargas', descripcion: 'Para cargas pesadas y voluminosas' },
@@ -50,7 +49,6 @@ const Surtido: React.FC<SurtidoProps> = ({ pedidos, onPedidoActualizado }) => {
     };
 
     setSurtidosEnProceso([...surtidosEnProceso, surtido]);
-    setPedidoSeleccionado(pedido);
   };
 
   const seleccionarHerramienta = (surtidoId: string, herramienta: 'montacargas' | 'patin' | 'diablito') => {

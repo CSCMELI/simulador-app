@@ -22,7 +22,6 @@ interface EntregaEnProceso {
 
 const Transportista: React.FC<TransportistaProps> = ({ pedidos, onPedidoActualizado }) => {
   const [entregasEnProceso, setEntregasEnProceso] = useState<EntregaEnProceso[]>([]);
-  const [mostrarFormularioEntrega, setMostrarFormularioEntrega] = useState<string | null>(null);
 
   const transportistas = [
     { id: 'T1', nombre: 'Carlos Mendoza', vehiculo: '🚚 Camión Grande', capacidad: 'Cargas pesadas' },
