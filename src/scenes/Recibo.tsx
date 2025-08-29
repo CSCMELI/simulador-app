@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import type { Pedido } from '../App';
+import type { Pedido, Usuario } from '../App';
 
 interface ReciboProps {
   pedidos: Pedido[];
   onPedidoActualizado: (pedidoId: string, nuevoEstado: Pedido['estado']) => void;
+  sesionActiva: Usuario | null;
 }
 
 interface MercanciaRecibida {
@@ -16,7 +17,7 @@ interface MercanciaRecibida {
   ubicacion: string;
 }
 
-const Recibo: React.FC<ReciboProps> = ({ pedidos, onPedidoActualizado }) => {
+const Recibo: React.FC<ReciboProps> = ({ pedidos, onPedidoActualizado, sesionActiva }) => {
   const [mercanciaRecibida, setMercanciaRecibida] = useState<MercanciaRecibida[]>([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [nuevaMercancia, setNuevaMercancia] = useState({
@@ -72,6 +73,19 @@ const Recibo: React.FC<ReciboProps> = ({ pedidos, onPedidoActualizado }) => {
         <h2 className="text-3xl font-bold text-gray-900 mb-2">📦 Estación de Recibo</h2>
         <p className="text-gray-600">Recibe mercancía del proveedor y acomoda en ubicaciones del almacén</p>
       </div>
+
+      {/* Información de Sesión */}
+      {sesionActiva && (
+        <div className="bg-green-50 rounded-xl border border-green-200 p-4 mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">{sesionActiva.avatar}</div>
+            <div>
+              <p className="font-medium text-green-900">Sesión Activa: {sesionActiva.nombre}</p>
+              <p className="text-sm text-green-700 capitalize">Rol: {sesionActiva.rol.replace('_', ' ')}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import type { Pedido } from '../App';
+import type { Pedido, Usuario } from '../App';
 
 interface TransportistaProps {
   pedidos: Pedido[];
   onPedidoActualizado: (pedidoId: string, nuevoEstado: Pedido['estado']) => void;
+  sesionActiva: Usuario | null;
 }
 
 interface EntregaEnProceso {
@@ -20,7 +21,7 @@ interface EntregaEnProceso {
   notas: string;
 }
 
-const Transportista: React.FC<TransportistaProps> = ({ pedidos, onPedidoActualizado }) => {
+const Transportista: React.FC<TransportistaProps> = ({ pedidos, onPedidoActualizado, sesionActiva }) => {
   const [entregasEnProceso, setEntregasEnProceso] = useState<EntregaEnProceso[]>([]);
 
   const transportistas = [
@@ -101,6 +102,19 @@ const Transportista: React.FC<TransportistaProps> = ({ pedidos, onPedidoActualiz
         <h2 className="text-3xl font-bold text-gray-900 mb-2">🚛 Estación de Transportista</h2>
         <p className="text-gray-600">Gestiona las entregas y el seguimiento de pedidos embarcados</p>
       </div>
+
+      {/* Información de Sesión */}
+      {sesionActiva && (
+        <div className="bg-red-50 rounded-xl border border-red-200 p-4 mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">{sesionActiva.avatar}</div>
+            <div>
+              <p className="font-medium text-red-900">Sesión Activa: {sesionActiva.nombre}</p>
+              <p className="text-sm text-red-700 capitalize">Rol: {sesionActiva.rol.replace('_', ' ')}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">

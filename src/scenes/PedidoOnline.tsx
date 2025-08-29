@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import type { Pedido, Producto } from '../App';
+import type { Pedido, Producto, Usuario } from '../App';
 
 interface PedidoOnlineProps {
   onPedidoCreado: (pedido: Pedido) => void;
   pedidos: Pedido[];
+  sesionActiva: Usuario | null;
 }
 
 const productosDisponibles: Producto[] = [
@@ -17,7 +18,7 @@ const productosDisponibles: Producto[] = [
   { id: '8', nombre: 'Plátanos 1kg', cantidad: 1, precio: 22.50, ubicacion: 'B-01-06', categoria: 'Frutas' },
 ];
 
-const PedidoOnline: React.FC<PedidoOnlineProps> = ({ onPedidoCreado, pedidos }) => {
+const PedidoOnline: React.FC<PedidoOnlineProps> = ({ onPedidoCreado, pedidos, sesionActiva }) => {
   const [carrito, setCarrito] = useState<Producto[]>([]);
   const [cliente, setCliente] = useState('');
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
@@ -79,6 +80,19 @@ const PedidoOnline: React.FC<PedidoOnlineProps> = ({ onPedidoCreado, pedidos }) 
         <h2 className="text-3xl font-bold text-gray-900 mb-2">🛒 Simulador de Pedidos Online</h2>
         <p className="text-gray-600">Simula el proceso de compra en línea de Walmart usando el sistema Atlas</p>
       </div>
+
+      {/* Información de Sesión */}
+      {sesionActiva && (
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4 mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">{sesionActiva.avatar}</div>
+            <div>
+              <p className="font-medium text-blue-900">Sesión Activa: {sesionActiva.nombre}</p>
+              <p className="text-sm text-blue-700 capitalize">Rol: {sesionActiva.rol.replace('_', ' ')}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Catálogo de Productos */}

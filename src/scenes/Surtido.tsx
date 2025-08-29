@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import type { Pedido } from '../App';
+import type { Pedido, Usuario } from '../App';
 
 interface SurtidoProps {
   pedidos: Pedido[];
   onPedidoActualizado: (pedidoId: string, nuevoEstado: Pedido['estado']) => void;
+  sesionActiva: Usuario | null;
 }
 
 interface SurtidoEnProceso {
@@ -22,7 +23,7 @@ interface SurtidoEnProceso {
   tiempoInicio: Date;
 }
 
-const Surtido: React.FC<SurtidoProps> = ({ pedidos, onPedidoActualizado }) => {
+const Surtido: React.FC<SurtidoProps> = ({ pedidos, onPedidoActualizado, sesionActiva }) => {
   const [surtidosEnProceso, setSurtidosEnProceso] = useState<SurtidoEnProceso[]>([]);
 
   const herramientas = [
@@ -94,6 +95,19 @@ const Surtido: React.FC<SurtidoProps> = ({ pedidos, onPedidoActualizado }) => {
         <h2 className="text-3xl font-bold text-gray-900 mb-2">🚚 Estación de Surtido</h2>
         <p className="text-gray-600">Selecciona la herramienta adecuada y surte los pedidos en proceso</p>
       </div>
+
+      {/* Información de Sesión */}
+      {sesionActiva && (
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4 mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">{sesionActiva.avatar}</div>
+            <div>
+              <p className="font-medium text-blue-900">Sesión Activa: {sesionActiva.nombre}</p>
+              <p className="text-sm text-blue-700 capitalize">Rol: {sesionActiva.rol.replace('_', ' ')}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
