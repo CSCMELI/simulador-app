@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pedido } from '../App';
+import type { Pedido } from '../App';
 
 interface TransportistaProps {
   pedidos: Pedido[];

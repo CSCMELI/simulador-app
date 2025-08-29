@@ -26,7 +26,6 @@ export interface Producto {
 const App: React.FC = () => {
   const [escena, setEscena] = useState<'pedido' | 'recibo' | 'surtido' | 'embarque' | 'transportista'>('pedido')
   const [pedidos, setPedidos] = useState<Pedido[]>([])
-  const [pedidoActual, setPedidoActual] = useState<Pedido | null>(null)
 
   const agregarPedido = (pedido: Pedido) => {
     setPedidos([...pedidos, pedido])

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pedido, Producto } from '../App';
+import type { Pedido, Producto } from '../App';
 
 interface PedidoOnlineProps {
   onPedidoCreado: (pedido: Pedido) => void;
