@@ -8,7 +8,7 @@ interface SimuladorInteractivoProps {
   onIniciarSesion: (usuario: Usuario) => void;
   onPedidoCreado: (pedido: Pedido) => void;
   onPedidoActualizado: (pedidoId: string, nuevoEstado: Pedido['estado']) => void;
-  onAsignarUsuario: (pedidoId: string, rol: keyof Pedido, usuarioId: string) => void;
+  onAsignarUsuario?: (pedidoId: string, rol: keyof Pedido, usuarioId: string) => void;
 }
 
 interface Herramienta {
@@ -27,8 +27,7 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
   sesionActiva,
   onIniciarSesion,
   onPedidoCreado,
-  onPedidoActualizado,
-  onAsignarUsuario
+  onPedidoActualizado
 }) => {
   const [mostrarFormularioPedido, setMostrarFormularioPedido] = useState(false);
   const [nuevoPedido, setNuevoPedido] = useState({
@@ -116,7 +115,7 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
         ...prev,
         productos: prev.productos.map((p, i) => 
           i === index ? { ...p, cantidad: nuevaCantidad } : p
-        ))
+        )
       }));
     }
   };
@@ -149,6 +148,8 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
         break;
       case 'enviar':
         onPedidoActualizado(pedido.id, 'enviado');
+        break;
+      default:
         break;
     }
   };
