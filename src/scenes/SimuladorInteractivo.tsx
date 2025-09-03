@@ -40,7 +40,7 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
       id: 'diablito',
       nombre: 'Diablito de Carga',
       icono: '🦽',
-      descripcion: 'Para cargas ligeras y precisión',
+      descripcion: 'Ideal para productos ligeros y precisión en el surtido',
       tipoCarga: 'ligera',
       velocidad: 8,
       capacidad: 'Hasta 50 kg'
@@ -49,7 +49,7 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
       id: 'patin',
       nombre: 'Patín Hidráulico',
       icono: '🛒',
-      descripcion: 'Para cargas medianas y movilidad',
+      descripcion: 'Perfecto para cargas medianas y movilidad eficiente',
       tipoCarga: 'media',
       velocidad: 6,
       capacidad: 'Hasta 200 kg'
@@ -58,7 +58,7 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
       id: 'montacargas',
       nombre: 'Montacargas',
       icono: '🚛',
-      descripcion: 'Para cargas pesadas y voluminosas',
+      descripcion: 'Para cargas pesadas, voluminosas y pallets completos',
       tipoCarga: 'pesada',
       velocidad: 4,
       capacidad: 'Hasta 1000 kg'
@@ -125,13 +125,13 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
     const pesoTotal = pedido.productos.reduce((total, p) => total + (p.cantidad * 1), 0);
     
     if (pesoTotal <= 50 && herramienta.tipoCarga === 'ligera') {
-      alert(`✅ Herramienta perfecta seleccionada: ${herramienta.nombre}`);
+      alert(`✅ ¡Excelente elección! ${herramienta.nombre} es perfecta para este pedido ligero (${pesoTotal} kg)`);
     } else if (pesoTotal <= 200 && herramienta.tipoCarga === 'media') {
-      alert(`✅ Herramienta adecuada seleccionada: ${herramienta.nombre}`);
+      alert(`✅ ¡Perfecto! ${herramienta.nombre} es ideal para este pedido mediano (${pesoTotal} kg)`);
     } else if (pesoTotal > 200 && herramienta.tipoCarga === 'pesada') {
-      alert(`✅ Herramienta correcta para carga pesada: ${herramienta.nombre}`);
+      alert(`✅ ¡Correcto! ${herramienta.nombre} es necesaria para esta carga pesada (${pesoTotal} kg)`);
     } else {
-      alert(`⚠️ Esta herramienta no es la más adecuada para este pedido. Considera otra opción.`);
+      alert(`⚠️ Esta herramienta no es la más adecuada para este pedido (${pesoTotal} kg). Considera una herramienta más apropiada para el peso de la carga.`);
     }
   };
 
@@ -157,14 +157,15 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">🎮 Simulador Interactivo de Roles</h2>
-        <p className="text-gray-600">Simula el flujo completo de trabajo con diferentes personas interactuando</p>
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">🏭 Sistema Atlas - Panel de Control</h2>
+        <p className="text-gray-600">Revisa pedidos asignados y gestiona el flujo de trabajo del sistema logístico</p>
       </div>
 
       {/* Selección de Rol */}
       {!sesionActiva ? (
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">👥 Selecciona tu Rol para Comenzar</h3>
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">👥 Acceso al Sistema Atlas</h3>
+          <p className="text-gray-600 mb-6">Selecciona tu rol para acceder a las funciones del sistema Atlas y revisar los pedidos asignados</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {usuarios.map((usuario) => (
               <div
@@ -201,9 +202,64 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
             </div>
             <div className="text-right">
               <p className="text-sm text-blue-600">Estado: Activo</p>
-              <p className="text-xs text-blue-500">Trabajando en el sistema</p>
+              <p className="text-xs text-blue-500">Trabajando en el sistema Atlas</p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Panel de Pedidos Asignados para Operador Atlas */}
+      {sesionActiva?.rol === 'operador_atlas' && (
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">📋 Pedidos Asignados en Sistema Atlas</h3>
+          <p className="text-gray-600 mb-4">Revisa los pedidos que han sido asignados para procesamiento en el sistema</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+              <div className="text-2xl font-bold text-yellow-600">
+                {pedidos.filter(p => p.estado === 'pendiente').length}
+              </div>
+              <div className="text-sm text-yellow-600">Pendientes de Revisión</div>
+            </div>
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <div className="text-2xl font-bold text-blue-600">
+                {pedidos.filter(p => p.estado === 'en_proceso').length}
+              </div>
+              <div className="text-sm text-blue-600">En Proceso</div>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+              <div className="text-2xl font-bold text-green-600">
+                {pedidos.filter(p => p.estado === 'surtido' || p.estado === 'embarcado' || p.estado === 'enviado').length}
+              </div>
+              <div className="text-sm text-green-600">Procesados</div>
+            </div>
+          </div>
+
+          {pedidos.filter(p => p.estado === 'pendiente').length > 0 && (
+            <div className="space-y-3">
+              <h4 className="font-medium text-gray-800">Pedidos Pendientes de Revisión:</h4>
+              {pedidos.filter(p => p.estado === 'pendiente').map((pedido) => (
+                <div key={pedido.id} className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h5 className="font-medium text-gray-900">Pedido {pedido.id}</h5>
+                      <p className="text-sm text-gray-600">Cliente: {pedido.cliente}</p>
+                      <p className="text-sm text-gray-600">{pedido.productos.length} productos</p>
+                    </div>
+                    <button
+                      onClick={() => procesarPedido(pedido, 'revisar')}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      🔍 Revisar en Atlas
+                    </button>
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Productos: {pedido.productos.map(p => `${p.nombre} (${p.ubicacion})`).join(', ')}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -290,20 +346,55 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
       {/* Herramientas de Surtido */}
       {sesionActiva?.rol === 'surtidor' && (
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">🛠️ Herramientas de Surtido Disponibles</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">🛠️ Herramientas de Surtido del Sistema Atlas</h3>
+          <p className="text-gray-600 mb-6">Selecciona la herramienta más adecuada según el peso y tipo de productos a surtir</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {herramientas.map((herramienta) => (
-              <div key={herramienta.id} className="border border-gray-200 rounded-lg p-4">
-                <div className="text-4xl mb-2">{herramienta.icono}</div>
-                <h4 className="font-medium text-gray-900">{herramienta.nombre}</h4>
-                <p className="text-sm text-gray-600">{herramienta.descripcion}</p>
-                <div className="mt-2 space-y-1">
-                  <p className="text-xs text-gray-500">Capacidad: {herramienta.capacidad}</p>
-                  <p className="text-xs text-gray-500">Velocidad: {herramienta.velocidad}/10</p>
-                  <p className="text-xs text-gray-500">Tipo: {herramienta.tipoCarga}</p>
+              <div key={herramienta.id} className="border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
+                <div className="text-6xl mb-4 text-center">{herramienta.icono}</div>
+                <h4 className="font-bold text-gray-900 text-lg mb-2 text-center">{herramienta.nombre}</h4>
+                <p className="text-sm text-gray-600 mb-4 text-center">{herramienta.descripcion}</p>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Capacidad:</span>
+                    <span className="text-xs font-medium text-blue-600">{herramienta.capacidad}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Velocidad:</span>
+                    <div className="flex items-center">
+                      <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${herramienta.velocidad * 10}%` }}
+                        ></div>
+                      </div>
+                      <span className="text-xs font-medium text-blue-600">{herramienta.velocidad}/10</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Tipo de Carga:</span>
+                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                      herramienta.tipoCarga === 'ligera' ? 'bg-green-100 text-green-800' :
+                      herramienta.tipoCarga === 'media' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
+                    }`}>
+                      {herramienta.tipoCarga}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+          
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 className="font-semibold text-blue-900 mb-2">💡 Consejos para Selección de Herramientas:</h4>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li>• <strong>Diablito:</strong> Usa para productos ligeros como pan, lácteos pequeños</li>
+              <li>• <strong>Patín Hidráulico:</strong> Ideal para cajas medianas y productos envasados</li>
+              <li>• <strong>Montacargas:</strong> Necesario para pallets completos y productos pesados</li>
+            </ul>
           </div>
         </div>
       )}
@@ -311,11 +402,16 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
       {/* Pedidos Activos */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-800">📋 Pedidos Activos en el Sistema</h3>
+          <h3 className="text-xl font-semibold text-gray-800">📋 Pedidos Activos en el Sistema Atlas</h3>
+          <p className="text-sm text-gray-600 mt-1">Seguimiento en tiempo real del flujo de pedidos</p>
         </div>
         <div className="p-6">
           {pedidos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No hay pedidos activos en el sistema</p>
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">📦</div>
+              <p className="text-gray-500 text-lg mb-2">No hay pedidos activos en el sistema</p>
+              <p className="text-gray-400 text-sm">Los pedidos aparecerán aquí cuando sean creados por los clientes</p>
+            </div>
           ) : (
             <div className="space-y-4">
               {pedidos.map((pedido) => (
@@ -348,6 +444,29 @@ const SimuladorInteractivo: React.FC<SimuladorInteractivoProps> = ({
                           <span className="text-blue-600 ml-2">📍{producto.ubicacion}</span>
                         </div>
                       ))}
+                    </div>
+                    
+                    {/* Información de Peso y Herramienta Recomendada */}
+                    <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <span className="text-sm text-gray-600">Peso estimado: </span>
+                          <span className="font-medium text-gray-900">
+                            {pedido.productos.reduce((total, p) => total + (p.cantidad * 1), 0)} kg
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-sm text-gray-600">Herramienta recomendada: </span>
+                          <span className="font-medium text-blue-600">
+                            {(() => {
+                              const pesoTotal = pedido.productos.reduce((total, p) => total + (p.cantidad * 1), 0);
+                              if (pesoTotal <= 50) return '🦽 Diablito';
+                              if (pesoTotal <= 200) return '🛒 Patín Hidráulico';
+                              return '🚛 Montacargas';
+                            })()}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

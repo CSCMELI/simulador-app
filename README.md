@@ -1,69 +1,111 @@
-# React + TypeScript + Vite
+# 🏭 Sistema Atlas - Plataforma de Capacitación Logística
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una aplicación web interactiva diseñada para capacitar al personal en el procesamiento de pedidos en línea, desde la recepción hasta la entrega final.
 
-Currently, two official plugins are available:
+## 🎯 Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🏠 Página de Bienvenida
+- Landing page profesional con información del sistema
+- Explicación del flujo de trabajo
+- Acceso directo al sistema
 
-## Expanding the ESLint configuration
+### 🏭 Estaciones del Sistema
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### 📦 Estación de Recibo
+- Recepción de mercancía del proveedor
+- Acomodo en ubicaciones del almacén
+- Verificación y almacenamiento
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### 🚚 Estación de Surtido
+- Selección inteligente de herramientas:
+  - 🦽 **Diablito de Carga**: Para productos ligeros (hasta 50 kg)
+  - 🛒 **Patín Hidráulico**: Para cargas medianas (hasta 200 kg)
+  - 🚛 **Montacargas**: Para cargas pesadas (hasta 1000 kg)
+- Surtido de pedidos según ubicaciones
+- Recomendaciones automáticas de herramientas
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+#### 📋 Estación de Embarque
+- Preparación y embalaje de pedidos
+- Verificación de productos
+- Selección de tipo de embalaje
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### 🚛 Línea de Transportista
+- Gestión de entregas
+- Seguimiento en tiempo real
+- Coordinación con transportistas
+
+### 👥 Roles del Sistema
+- **Cliente**: Crea pedidos en línea
+- **Operador Atlas**: Revisa y asigna pedidos
+- **Surtidor**: Procesa pedidos con herramientas
+- **Embalador**: Prepara pedidos para envío
+- **Transportista**: Gestiona entregas
+
+## 🚀 Tecnologías Utilizadas
+
+- **React 18** con TypeScript
+- **Vite** para desarrollo rápido
+- **Tailwind CSS** para estilos
+- **ESLint** para calidad de código
+
+## 📦 Instalación
+
+```bash
+# Clonar el repositorio
+git clone [url-del-repositorio]
+
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎮 Cómo Usar el Sistema
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Acceso**: Inicia en la página de bienvenida del Sistema Atlas
+2. **Selección de Rol**: Elige tu rol (Cliente, Operador Atlas, Surtidor, etc.)
+3. **Flujo de Trabajo**: Sigue el flujo: Recibo → Surtido → Embarque → Transportista
+4. **Herramientas**: Selecciona la herramienta adecuada según el peso de la carga
+5. **Seguimiento**: Monitorea el progreso de los pedidos en tiempo real
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Funcionalidades Clave
+
+### Sistema de Recomendaciones
+- Cálculo automático del peso de pedidos
+- Recomendación de herramientas según el peso
+- Validación de selección de herramientas
+
+### Interfaz Intuitiva
+- Diseño moderno y profesional
+- Navegación clara entre estaciones
+- Indicadores visuales de progreso
+
+### Capacitación Interactiva
+- Simulación realista del flujo de trabajo
+- Feedback inmediato en las acciones
+- Guías y consejos integrados
+
+## 📊 Flujo de Trabajo
+
 ```
+Cliente crea pedido → Operador Atlas revisa → Surtidor procesa → Embalador prepara → Transportista entrega
+```
+
+## 🎯 Objetivos de Capacitación
+
+- Familiarizar al personal con el sistema Atlas
+- Enseñar la selección correcta de herramientas
+- Optimizar el flujo de trabajo logístico
+- Mejorar la eficiencia operativa
+
+## 📝 Notas de Desarrollo
+
+Este sistema está diseñado específicamente para capacitar al personal en el uso del sistema Atlas, proporcionando una experiencia de aprendizaje interactiva y realista.
+
+---
+
+**Desarrollado para optimizar el flujo de trabajo logístico y capacitar al personal de manera efectiva.**
